@@ -134,4 +134,12 @@ header{
 .idtoken{
     display: none;
 }
+.save-btn{
+    padding: 5px 20px;
+    margin-left: 10px;
+    border-radius: 7px;
+    background-color: rgb(21, 21, 49);
+    color: white;
+    display: none;
+}
 
