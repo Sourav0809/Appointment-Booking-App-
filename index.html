@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <title>Booking Appointment App</title>
+</head>
+
+<body>
+    <header class="head">
+        <h1 class="header_heading">Book Your Appointment Now</h1>
+        <div class="search_space_div">
+            <label for="search" class="label_searchapp"><span>Search Your Appointment </span></label>
+            <input type="text" name="search" id="search">
+
+        </div>
+    </header>
+    <div class="form-section">
+        <form action="#" class="form" id="main_form">
+            <label for="name" id="name_label" class="form-label">Name:</label>
+            <input type="text" name="name" id="person_name" class="form_input">
+
+            <label for="email" id="email" class="form-label">Email:</label>
+            <input type="email" name="email" id="person_email" class="form_input">
+
+            <label for="phoneNo" id="email" class="form-label">Phone:</label>
+            <input type="number" name="phoneNo" id="person_phone" class="form_input">
+
+            <input type="submit" name="" id="submit" class="submit-btn" value="Book Now">
+
+        </form>
+
+    </div>
+    <h1 class="itemsHeading">Booked Appointments</h1>
+    <div class="main-container">
+        <div class="container">
+            <ul class="items">
+                <h1 class='list_heading'>No Appointment Booked !! </h1>
+                <!-- <li class="listitems"><span id="nameSpan">Item 1</span><button class="edit-btn">Edit</button><button
+                        class="listitems_btn">X</button></li>
+                <li class="listitems"><span>Item 2</span><button class="listitems_btn">X</button></li>
+                <li class="listitems"><span>Item 3</span><button class="listitems_btn">X</button></li>
+                <li class="listitems"><span>Item 4</span><button class="listitems_btn">X</button></li> -->
+
+            </ul>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

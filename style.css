@@ -1,0 +1,133 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(34, 34, 83);
+    color: white;
+    padding: 20px 80px;
+}
+.search_space_div{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.label_searchapp span{
+    font-size: 30px
+}
+
+#search{
+    width: 300px;
+    height: 20px;
+    padding: 4px 5px;
+    font-size: 18px;
+    border-radius: 7px;
+}
+
+.itemsHeading{
+    text-align: center;
+    background-color: rgb(10, 20, 51);
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.main-container{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    
+
+}
+
+.container{
+    border: 2px solid blue;
+    margin: 20px;
+    width: 70%;
+    /* overflow: hidden; */
+}
+
+.items{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;;
+    align-items: center;
+    gap: 8px;
+
+}
+.listitems{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 10px 20px;
+    border: 3px solid rgb(5, 165, 228);
+    border-radius: 7px;
+    width: 90%;
+}
+
+.form-section{
+    margin-top: 30px;
+    background-color: rgb(158, 195, 214);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.form{
+    padding: 10px;
+    color: black;
+    
+}
+.form-label{
+    font-size: 23px;
+}
+
+.form_input{
+    padding: 5px 15px;
+    width: 250px;
+    border-radius: 7px;
+}
+.submit-btn{
+    padding: 5px 20px;
+    margin-left: 10px;
+    border-radius: 7px;
+    background-color: rgb(21, 21, 49);
+    color: white;
+}
+
+.listitems_btn{
+    padding: 2px 15px;
+    background-color: red;
+    color: white;
+    border-radius: 7px;
+}
+
+.noelement{
+    padding: 40px;
+    font-size: 30px;
+}
+
+.list_heading{
+    text-align: center;
+    font-size: 40px;
+    padding: 40px;
+}
+
+.edit-btn{
+    padding: 2px 12px;
+    background-color: green;
+    color: white;
+    border-radius: 7px;
+}
+
