@@ -9,6 +9,8 @@ const phone = document.querySelector("#person_phone")
 /* -------------------------------------------------------------------------- */
 /*                       Fetching Data on Every Refresh                       */
 /* -------------------------------------------------------------------------- */
+
+
 window.addEventListener("DOMContentLoaded", () => {
     axios.get("https://crudcrud.com/api/08ee7597555341bcbc444aa444c3ea3a/BookedAppointments")
         .then((res) => {
@@ -17,10 +19,11 @@ window.addEventListener("DOMContentLoaded", () => {
                 if ((list.firstElementChild.className == "list_heading")) {
                     list.removeChild(list.firstElementChild)
                 }
-                list.innerHTML += ` <li class='listitems'><span contenteditable = 'true'>${res.data[i].person_Name}</span> <span>${res.data[i].person_Email}</span> <span>${res.data[i].person_Phone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
+                list.innerHTML += ` <li class='listitems'><span class="idtoken">${res.data[i]._id}</span><span contenteditable = 'true'>${res.data[i].person_Name}</span> <span>${res.data[i].person_Email}</span> <span>${res.data[i].person_Phone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
             }
         })
         .catch((err) => console.log(err))
+
 })
 
 
@@ -28,32 +31,39 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 /* -------------------------------------------------------------------------- */
-/*                              Add item Function                             */
+/*                     Function to Add items into Server                      */
 /* -------------------------------------------------------------------------- */
 
 mainForm.addEventListener("submit", additem)
-function additem(e) {
+async function additem(e) {
     e.preventDefault()
-    // also deleting the no appointment heading
-    if ((list.firstElementChild.className == "list_heading")) {
-        list.removeChild(list.firstElementChild)
+    try {
+        let itemObj = {
+            person_Name: name.value,
+            person_Email: email.value,
+            person_Phone: phone.value
+
+        }
+        //creating destruction to get the actual data from the obj
+        const { data } = await axios.post('https://crudcrud.com/api/08ee7597555341bcbc444aa444c3ea3a/BookedAppointments', itemObj)
+        if ((list.firstElementChild.className == "list_heading")) {
+            list.removeChild(list.firstElementChild)
+        }
+        // also adding those item into web page
+        let enteredName = name.value
+        let enteredEmail = email.value
+        let enteredPhone = phone.value
+        list.innerHTML += ` <li class='listitems'><span class="idtoken">${data._id}</span><span contenteditable = 'true'>${enteredName}</span> <span>${enteredEmail}</span> <span>${enteredPhone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
+        // making the input box empty
+        name.value = ""
+        email.value = ""
+        phone.value = ""
+    } catch (error) {
+        console.log(error);
     }
-    // adding to crud crud
-    addtoServer()
-
-    let enteredName = name.value
-    let enteredEmail = email.value
-    let enteredPhone = phone.value
-    list.innerHTML += ` <li class='listitems'><span contenteditable = 'true'>${enteredName}</span> <span>${enteredEmail}</span> <span>${enteredPhone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
-    // making the input box empty
-    name.value = ""
-    email.value = ""
-    phone.value = ""
-
-
-
 
 }
+
 
 
 /* -------------------------------------------------------------------------- */
@@ -61,18 +71,24 @@ function additem(e) {
 /* -------------------------------------------------------------------------- */
 
 list.addEventListener("click", deleteItem)
-function deleteItem(e) {
-    if (e.target.classList.contains("listitems_btn")) {
-        if (confirm("Are You Sure ? ")) {
-            const li = e.target.parentElement
-            // Also deleting form local storage
-            localStorage.removeItem(li.children[1].innerText)
-            list.removeChild(li)
+async function deleteItem(e) {
+    try {
+        if (e.target.classList.contains("listitems_btn")) {
+            if (confirm("Are You Sure ? ")) {
+                const li = e.target.parentElement
+                const idToken = li.firstElementChild.innerText
+                await axios.delete(`https://crudcrud.com/api/08ee7597555341bcbc444aa444c3ea3a/BookedAppointments/${idToken}`)
 
+                list.removeChild(li)
+
+            }
         }
-    }
-    if (list.children.length == 0) {
-        list.innerHTML += "<h1 class='list_heading'>No Appointment Booked !! </h1>"
+        if (list.children.length == 0) {
+            list.innerHTML += "<h1 class='list_heading'>No Appointment Booked !! </h1>"
+        }
+    } catch (error) {
+        console.log(err)
+
     }
 }
 
@@ -100,23 +116,6 @@ function filtervalues() {
 }
 
 
-/* -------------------------------------------------------------------------- */
-/*                     Function to Add items into Server                      */
-/* -------------------------------------------------------------------------- */
-
-function addtoServer() {
-    let itemObj = {
-        person_Name: name.value,
-        person_Email: email.value,
-        person_Phone: phone.value
-
-    }
-
-    axios.post('https://crudcrud.com/api/08ee7597555341bcbc444aa444c3ea3a/BookedAppointments', itemObj)
-        .then((res) => console.log(res))
-        .catch(err => console.log(err))
-
-}
 
 
 

@@ -131,3 +131,7 @@ header{
     border-radius: 7px;
 }
 
+.idtoken{
+    display: none;
+}
+
