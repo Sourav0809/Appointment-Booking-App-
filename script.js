@@ -6,6 +6,26 @@ const name = document.querySelector("#person_name")
 const email = document.querySelector("#person_email")
 const phone = document.querySelector("#person_phone")
 
+/* -------------------------------------------------------------------------- */
+/*                       Fetching Data on Every Refresh                       */
+/* -------------------------------------------------------------------------- */
+window.addEventListener("DOMContentLoaded", () => {
+    axios.get("https://crudcrud.com/api/08ee7597555341bcbc444aa444c3ea3a/BookedAppointments")
+        .then((res) => {
+            console.log(res)
+            for (let i = 0; i < res.data.length; i++) {
+                if ((list.firstElementChild.className == "list_heading")) {
+                    list.removeChild(list.firstElementChild)
+                }
+                list.innerHTML += ` <li class='listitems'><span contenteditable = 'true'>${res.data[i].person_Name}</span> <span>${res.data[i].person_Email}</span> <span>${res.data[i].person_Phone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
+            }
+        })
+        .catch((err) => console.log(err))
+})
+
+
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                              Add item Function                             */
