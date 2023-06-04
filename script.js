@@ -7,24 +7,33 @@ const email = document.querySelector("#person_email")
 const phone = document.querySelector("#person_phone")
 const bookNowBtn = document.getElementById('submit')
 const saveBtn = document.querySelector('.save-btn')
+const loaderScreen = document.querySelector(".loader-screen")
+const heading = document.querySelector(".list_heading")
+
 
 /* -------------------------------------------------------------------------- */
 /*                       Fetching Data on Every Refresh                       */
 /* -------------------------------------------------------------------------- */
 
 
-window.addEventListener("DOMContentLoaded", () => {
-    axios.get("https://crudcrud.com/api/0cf8d1500e3b4f30ad46b8cf137cb159/BookedAppointments")
-        .then((res) => {
-            // console.log(res)
-            for (let i = 0; i < res.data.length; i++) {
-                if ((list.firstElementChild.className == "list_heading")) {
-                    list.removeChild(list.firstElementChild)
-                }
-                list.innerHTML += ` <li class='listitems'><span class="idtoken">${res.data[i]._id}</span><span>${res.data[i].person_Name}</span> <span>${res.data[i].person_Email}</span> <span>${res.data[i].person_Phone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
+window.addEventListener("DOMContentLoaded", async () => {
+
+    try {
+        let res = await axios.get("https://crudcrud.com/api/7d7cdecf61804c1eba0b98440c866ab4/BookedAppointments")
+
+        for (let i = 0; i < res.data.length; i++) {
+            if ((list.firstElementChild.className == "list_heading")) {
+                list.removeChild(list.firstElementChild)
             }
-        })
-        .catch((err) => console.log(err))
+            list.innerHTML += ` <li class='listitems'><span class="idtoken">${res.data[i]._id}</span><span>${res.data[i].person_Name}</span> <span>${res.data[i].person_Email}</span> <span>${res.data[i].person_Phone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
+        }
+
+        loaderScreen.style.display = "none"
+        list.style.display = "flex"
+
+    } catch (error) {
+        console.log(error)
+    }
 
 })
 
@@ -37,9 +46,14 @@ window.addEventListener("DOMContentLoaded", () => {
 /* -------------------------------------------------------------------------- */
 
 mainForm.addEventListener("submit", additem)
+
 async function additem(e) {
-    e.preventDefault()
     try {
+        e.preventDefault()
+
+        list.style.display = "flex"
+        loaderScreen.style.display = "none"
+
         if (bookNowBtn.value == "Book Now") {
             let itemObj = {
                 person_Name: name.value,
@@ -48,9 +62,9 @@ async function additem(e) {
 
             }
             //creating destruction to get the actual data from the obj
-            const { data } = await axios.post('https://crudcrud.com/api/0cf8d1500e3b4f30ad46b8cf137cb159/BookedAppointments', itemObj)
+            const { data } = await axios.post('https://crudcrud.com/api/7d7cdecf61804c1eba0b98440c866ab4/BookedAppointments', itemObj)
             if ((list.firstElementChild.className == "list_heading")) {
-                list.removeChild(list.firstElementChild)
+                heading.remove()
             }
             // also adding those item into web page
             let enteredName = name.value
@@ -61,6 +75,8 @@ async function additem(e) {
             name.value = ""
             email.value = ""
             phone.value = ""
+
+
         }
     } catch (error) {
         console.log(error);
@@ -77,17 +93,18 @@ async function additem(e) {
 list.addEventListener("click", deleteItem)
 async function deleteItem(e) {
     try {
+        list.style.display = "flex"
+        loaderScreen.style.display = "none"
         if (e.target.classList.contains("listitems_btn")) {
             if (confirm("Are You Sure ? ")) {
                 const li = e.target.parentElement
                 const idToken = li.firstElementChild.innerText
-                await axios.delete(`https://crudcrud.com/api/0cf8d1500e3b4f30ad46b8cf137cb159/BookedAppointments/${idToken}`)
+                await axios.delete(`https://crudcrud.com/api/7d7cdecf61804c1eba0b98440c866ab4/BookedAppointments/${idToken}`)
 
-                list.removeChild(li)
-
+                li.remove()
             }
         }
-        console.log(list.children.length)
+
     } catch (error) {
         console.log(error)
 
@@ -108,6 +125,8 @@ const filter = document.querySelector("#search")
 filter.addEventListener("keyup", filtervalues)
 
 function filtervalues() {
+    list.style.display = "flex"
+    loaderScreen.style.display = "none"
     for (let i = 0; i < list.children.length; i++) {
         var target = list.children[i]
         if (target.children[1].textContent.toLowerCase().includes(filter.value.toLowerCase()) || target.children[2].textContent.toLowerCase().includes(filter.value.toLowerCase()) || target.children[3].textContent.toLowerCase().includes(filter.value.toLowerCase())) {
@@ -130,47 +149,59 @@ function filtervalues() {
 
 list.addEventListener("click", edit)
 
-async function edit(e) {
-    try {
-
+function edit(e) {
+    list.style.display = "flex"
+    loaderScreen.style.display = "none"
+    if (e.target.classList.contains("edit-btn")) {
         name.value = e.target.parentElement.children[1].textContent
         email.value = e.target.parentElement.children[2].textContent
         phone.value = e.target.parentElement.children[3].textContent
 
         let parentElement = e.target.parentElement
         let tokenId = parentElement.firstElementChild.textContent
-        console.log(tokenId)
+        // console.log(tokenId)
 
-        //deleting the target value from the server
+
         bookNowBtn.style.display = "none"
         saveBtn.style.display = "inline"
         parentElement.remove()
         saveBtn.addEventListener("click", async (e) => {
-            e.preventDefault()
-            let itemObj = {
-                person_Name: name.value,
-                person_Email: email.value,
-                person_Phone: phone.value
+            try {
+                e.preventDefault()
+                let itemObj = {
+                    person_Name: name.value,
+                    person_Email: email.value,
+                    person_Phone: phone.value
+
+                }
+
+                await axios.put(`https://crudcrud.com/api/7d7cdecf61804c1eba0b98440c866ab4/BookedAppointments/${tokenId}`, itemObj)
+                let enteredName = name.value
+                let enteredEmail = email.value
+                let enteredPhone = phone.value
+                list.innerHTML += ` <li class='listitems'><span class="idtoken">${tokenId}</span><span>${enteredName}</span> <span>${enteredEmail}</span> <span>${enteredPhone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
+                // making the input box empty
+                name.value = ""
+                email.value = ""
+                phone.value = ""
+                bookNowBtn.style.display = "inline"
+                saveBtn.style.display = "none"
+            } catch (error) {
+                console.log(error)
 
             }
 
-            await axios.put(`https://crudcrud.com/api/0cf8d1500e3b4f30ad46b8cf137cb159/BookedAppointments/${tokenId}`, itemObj)
-            let enteredName = name.value
-            let enteredEmail = email.value
-            let enteredPhone = phone.value
-            list.innerHTML += ` <li class='listitems'><span class="idtoken">${tokenId}</span><span>${enteredName}</span> <span>${enteredEmail}</span> <span>${enteredPhone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
-            // making the input box empty
-            name.value = ""
-            email.value = ""
-            phone.value = ""
-            bookNowBtn.style.display = "inline"
-            saveBtn.style.display = "none"
-
         })
 
-
-    } catch (error) {
-        console.log(error)
-
     }
+
+
+
 }
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                  Storing the Network url to Local Storage                  */
+/* -------------------------------------------------------------------------- */
+

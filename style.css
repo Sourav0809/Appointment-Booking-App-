@@ -1,9 +1,9 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-header{
+header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -11,18 +11,19 @@ header{
     color: white;
     padding: 20px 80px;
 }
-.search_space_div{
+
+.search_space_div {
     display: flex;
     justify-content: space-between;
     gap: 10px;
     align-items: center;
 }
 
-.label_searchapp span{
+.label_searchapp span {
     font-size: 30px
 }
 
-#search{
+#search {
     width: 300px;
     height: 20px;
     padding: 4px 5px;
@@ -30,7 +31,7 @@ header{
     border-radius: 7px;
 }
 
-.itemsHeading{
+.itemsHeading {
     text-align: center;
     background-color: rgb(10, 20, 51);
     width: 50%;
@@ -41,30 +42,32 @@ header{
     border-radius: 10px;
 }
 
-.main-container{
+.main-container {
     margin-top: 10px;
     display: flex;
     justify-content: center;
-    
+
 
 }
 
-.container{
-    border: 2px solid blue;
+.container {
+    box-shadow: -1px 1px 15px #4f8be7;
     margin: 20px;
     width: 70%;
     /* overflow: hidden; */
 }
 
-.items{
+.items {
     padding: 20px;
-    display: flex;
-    flex-direction: column;;
+    display: none;
+    flex-direction: column;
     align-items: center;
     gap: 8px;
 
+
 }
-.listitems{
+
+.listitems {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -75,7 +78,7 @@ header{
     width: 90%;
 }
 
-.form-section{
+.form-section {
     margin-top: 30px;
     background-color: rgb(158, 195, 214);
     display: flex;
@@ -84,62 +87,81 @@ header{
     gap: 15px;
 }
 
-.form{
+.form {
     padding: 10px;
     color: black;
-    
+
 }
-.form-label{
+
+.form-label {
     font-size: 23px;
 }
 
-.form_input{
+.form_input {
     padding: 5px 15px;
     width: 250px;
     border-radius: 7px;
 }
-.submit-btn{
+
+.submit-btn {
     padding: 5px 20px;
     margin-left: 10px;
     border-radius: 7px;
     background-color: rgb(21, 21, 49);
     color: white;
+    cursor: pointer;
 }
 
-.listitems_btn{
+.listitems_btn {
     padding: 2px 15px;
     background-color: red;
     color: white;
     border-radius: 7px;
 }
 
-.noelement{
+.noelement {
     padding: 40px;
     font-size: 30px;
 }
 
-.list_heading{
+.list_heading {
     text-align: center;
     font-size: 40px;
     padding: 40px;
 }
 
-.edit-btn{
+.edit-btn {
     padding: 2px 12px;
     background-color: green;
     color: white;
+    cursor: pointer;
     border-radius: 7px;
 }
 
-.idtoken{
+.idtoken {
     display: none;
 }
-.save-btn{
+
+.save-btn {
     padding: 5px 20px;
     margin-left: 10px;
     border-radius: 7px;
     background-color: rgb(21, 21, 49);
     color: white;
     display: none;
+    cursor: pointer;
+    background-color: rgb(13, 215, 158);
+    color: whitesmoke;
 }
 
+.loader-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.loader-screen img {
+    height: 100px;
+    width: 100px;
+}
