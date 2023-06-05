@@ -33,7 +33,8 @@ header {
 
 .itemsHeading {
     text-align: center;
-    background-color: rgb(10, 20, 51);
+    background-color: rgb(86 110 187);
+    box-shadow: 2px 2px 30px #4f8be7;
     width: 50%;
     margin: auto;
     margin-top: 20px;
@@ -164,4 +165,22 @@ header {
 .loader-screen img {
     height: 100px;
     width: 100px;
+}
+
+#heading-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+}
+
+.bx {
+    font-size: 2rem;
+
+}
+
+#user-icon {
+    border-radius: 0.5rem;
+    cursor: pointer;
 }

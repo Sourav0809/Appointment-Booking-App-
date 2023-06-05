@@ -9,6 +9,7 @@ const bookNowBtn = document.getElementById('submit')
 const saveBtn = document.querySelector('.save-btn')
 const loaderScreen = document.querySelector(".loader-screen")
 const heading = document.querySelector(".list_heading")
+const userBtn = document.querySelector("#user-icon")
 
 
 /* -------------------------------------------------------------------------- */
@@ -19,7 +20,7 @@ const heading = document.querySelector(".list_heading")
 window.addEventListener("DOMContentLoaded", async () => {
 
     try {
-        let res = await axios.get("https://crudcrud.com/api/7d7cdecf61804c1eba0b98440c866ab4/BookedAppointments")
+        let res = await axios.get(`${localStorage.getItem("url")}/BookedAppointments`)
 
         for (let i = 0; i < res.data.length; i++) {
             if ((list.firstElementChild.className == "list_heading")) {
@@ -62,9 +63,9 @@ async function additem(e) {
 
             }
             //creating destruction to get the actual data from the obj
-            const { data } = await axios.post('https://crudcrud.com/api/7d7cdecf61804c1eba0b98440c866ab4/BookedAppointments', itemObj)
+            const { data } = await axios.post(`${localStorage.getItem("url")}/BookedAppointments`, itemObj)
             if ((list.firstElementChild.className == "list_heading")) {
-                heading.remove()
+                list.removeChild(list.firstElementChild)
             }
             // also adding those item into web page
             let enteredName = name.value
@@ -99,7 +100,7 @@ async function deleteItem(e) {
             if (confirm("Are You Sure ? ")) {
                 const li = e.target.parentElement
                 const idToken = li.firstElementChild.innerText
-                await axios.delete(`https://crudcrud.com/api/7d7cdecf61804c1eba0b98440c866ab4/BookedAppointments/${idToken}`)
+                await axios.delete(`${localStorage.getItem("url")}/BookedAppointments/${idToken}`)
 
                 li.remove()
             }
@@ -175,7 +176,7 @@ function edit(e) {
 
                 }
 
-                await axios.put(`https://crudcrud.com/api/7d7cdecf61804c1eba0b98440c866ab4/BookedAppointments/${tokenId}`, itemObj)
+                await axios.put(`${localStorage.getItem("url")}/BookedAppointments/${tokenId}`, itemObj)
                 let enteredName = name.value
                 let enteredEmail = email.value
                 let enteredPhone = phone.value
@@ -205,3 +206,8 @@ function edit(e) {
 /*                  Storing the Network url to Local Storage                  */
 /* -------------------------------------------------------------------------- */
 
+userBtn.addEventListener("click", () => {
+
+    let url = prompt("Enter the Link here... ")
+    localStorage.setItem("url", url)
+})
