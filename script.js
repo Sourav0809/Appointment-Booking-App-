@@ -62,7 +62,7 @@ async function additem(e) {
                 person_Phone: phone.value
 
             }
-            //creating destruction to get the actual data from the obj
+            //using destruction to get the actual data from the node
             const { data } = await axios.post(`${localStorage.getItem("url")}/BookedAppointments`, itemObj)
             if ((list.firstElementChild.className == "list_heading")) {
                 list.removeChild(list.firstElementChild)
@@ -72,7 +72,7 @@ async function additem(e) {
             let enteredEmail = email.value
             let enteredPhone = phone.value
             list.innerHTML += ` <li class='listitems'><span class="idtoken">${data._id}</span><span>${enteredName}</span> <span>${enteredEmail}</span> <span>${enteredPhone}</span><button class="edit-btn">Edit</button><button class='listitems_btn'>X</button></li> `
-            // making the input box empty
+            // making the input fields empty
             name.value = ""
             email.value = ""
             phone.value = ""
